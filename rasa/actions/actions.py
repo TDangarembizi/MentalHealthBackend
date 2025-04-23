@@ -5,6 +5,7 @@ from rasa_sdk.events import SlotSet
 import requests
 from typing import Any, Text, Dict, List
 from datetime import datetime
+import os
 
 url = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
