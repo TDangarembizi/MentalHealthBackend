@@ -43,7 +43,7 @@ firebase_config = {
 
 # Initialise Flask app
 app = Flask(__name__)
-CORS(app, origins=["https://mental-health-backend-production.up.railway.app"], supports_credentials=True)
+CORS(app, origins=["https://mental-health-frontend-zeta.vercel.app"], supports_credentials=True)
 
 # Initialise Firebase
 if not firebase_admin._apps:
