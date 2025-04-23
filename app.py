@@ -12,9 +12,6 @@ from functools import wraps
 from firebase_admin import auth
 import bcrypt
 
-# Replace with the UID of the admin user
-auth.set_custom_user_claims("Kl2v9O4ilfQc5FBdlEoj5kiza9s1", {"admin": True})
-
 def require_auth(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -53,6 +50,12 @@ if not firebase_admin._apps:
     cred = credentials.Certificate(firebase_config)
     firebase_admin.initialize_app(cred)
     db = firestore.client()
+
+# Set admin claims (optional: only run once in practice)
+    try:
+        auth.set_custom_user_claims("Kl2v9O4ilfQc5FBdlEoj5kiza9s1", {"admin": True})
+    except Exception as e:
+        print("[WARN] Could not set admin claims:", str(e))
 
 # Rasa server URL
 RASA_URL = "http://localhost:5005/webhooks/rest/webhook"
