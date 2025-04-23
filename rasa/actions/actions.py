@@ -6,10 +6,12 @@ import requests
 from typing import Any, Text, Dict, List
 from datetime import datetime
 
+url = os.getenv("OLLAMA_URL", "http://localhost:11434")
+
+
 def ask_llama(prompt):
     instructions="You are an empathetic mental health chatbot. Respond with warmth, understanding, and keep replies brief (1–2 sentences max). "
     prompt=instructions+prompt.strip()
-    url = "http://localhost:11434/api/generate"
     payload = {
         "model": "llama3.2",
         "prompt": prompt,
