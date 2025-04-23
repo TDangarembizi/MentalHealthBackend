@@ -1,5 +1,32 @@
-.rasa/cache/
-models/
+# Python
 __pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.log
+*.sqlite3
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Rasa models
+rasa/models/
+rasa/*.db
+
+# Ollama cache (if downloading locally)
+.ollama/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# Secrets
 .env
-mental-health-backend/firebase-service-account.json
