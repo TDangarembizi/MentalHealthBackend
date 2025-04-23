@@ -5,12 +5,6 @@ RUN apt-get update && apt-get install -y \
     git curl ca-certificates && \
     apt-get clean
 
-# Install Ollama
-RUN curl -fsSL https://ollama.com/install.sh | sh
-
-# Pull the LLaMA 3.2 model so it’s available at container startup
-RUN ollama pull llama3
-
 # Set working directory
 WORKDIR /app
 
@@ -20,11 +14,11 @@ COPY . .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Ensure start.sh is executable
+# Make the script executable
 RUN chmod +x start.sh
 
-# Expose ports: Flask (5000), Rasa (5005), Rasa Actions (5055), Ollama (11434)
-EXPOSE 5000 5005 5055 11434
+# Expose Flask, Rasa, Actions
+EXPOSE 5000 5005 5055
 
 # Start everything
 CMD ["./start.sh"]

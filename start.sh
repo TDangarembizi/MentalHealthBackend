@@ -1,27 +1,17 @@
 #!/bin/bash
 
-echo "🔁 [BOOT] Starting Mental Health Chatbot Backend..."
+echo "[BOOT] Starting Mental Health Chatbot Backend..."
 
 # --- RASA SERVER ---
-echo
+echo "Launching Rasa Core..."
 cd rasa
-rasa run --enable-api --cors "*" --model models --endpoints endpoints.yml --debug &
+rasa run --enable-api --cors "*" --model models --endpoints endpoints.yml --port 5005 --debug &
 sleep 5
 
-echo
-rasa run actions --debug &
+echo "Launching Rasa Action server..."
+rasa run actions --port 5055 --debug &
 cd ..
 
-# --- OLLAMA ---
-echo
-ollama serve &  # Keep server alive
-sleep 3
-echo
-ollama run llama3 &
-sleep 2
-
 # --- FLASK BACKEND ---
-echo
-python3 app.py
-
-wait
+echo "Launching Flask app..."
+gunicorn app:app --bind 0.0.0.0:5000
