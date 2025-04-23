@@ -10,4 +10,5 @@ rasa run actions --port 5055 --debug &
 cd ..
 
 echo "🚀 Launching Flask..."
-exec gunicorn app:app --bind 0.0.0.0:5000
+PORT=${PORT:-5000}  # Use Railway's $PORT if defined
+exec gunicorn app:app --bind 0.0.0.0:$PORT
