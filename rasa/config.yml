@@ -15,6 +15,7 @@ pipeline:
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
+    analyzer: word
   - name: CountVectorsFeaturizer
     analyzer: char_wb
     min_ngram: 1
