@@ -12,7 +12,6 @@ env/
 venv/
 
 # Rasa models
-rasa/models/
 rasa/*.db
 
 # Ollama cache (if downloading locally)
