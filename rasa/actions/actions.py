@@ -171,14 +171,23 @@ class ActionLogSentiment(Action):
             domain: dict) -> list:
 
         metadata = tracker.latest_message.get("metadata", {})
-        user_id = metadata.get("email", tracker.sender_id)  # fallback if not found
+        user_id = metadata.get("email", tracker.sender_id)  # fallback to sender ID
+
         sentiment = tracker.latest_message.get("sentiment")
         score = tracker.latest_message.get("sentiment_score")
 
+        # ⛑️ Fallback: Use TextBlob if sentiment isn't precomputed
         if not sentiment:
-            return []
+            last_text = tracker.latest_message.get("text", "")
+            score = TextBlob(last_text).sentiment.polarity
+            if score > 0.2:
+                sentiment = "positive"
+            elif score < -0.2:
+                sentiment = "negative"
+            else:
+                sentiment = "neutral"
 
-        # Map sentiment to API-compatible mood values
+        # 🎯 Map sentiment to mood label
         sentiment_map = {
             "positive": "happy",
             "neutral": "okay",
@@ -186,23 +195,9 @@ class ActionLogSentiment(Action):
             "stressed": "stressed",
             "exhausted": "exhausted"
         }
+        mood = sentiment_map.get(sentiment, "okay")
 
-        mood = sentiment_map.get(sentiment, "okay")  # fallback to 'okay' if unmapped
-
-        payload = {
-            "user_id": user_id,
-            "mood": mood,
-            "timestamp": datetime.utcnow().isoformat()
-        }
-
-        # Log to Flask API
-        try:
-
-            requests.post("http://localhost:5000/mood", json=payload)
-        except Exception as e:
-            print(f"Error logging sentiment: {e}")
-
-        # Optional empathetic feedback
+        # 💬 Empathetic feedback
         if mood == "sad":
             dispatcher.utter_message(text="I'm here to support you. Would you like to talk more about what's bothering you?")
         elif mood == "happy":
@@ -214,4 +209,8 @@ class ActionLogSentiment(Action):
         else:
             dispatcher.utter_message(text="Thanks for sharing how you're feeling.")
 
-        return [SlotSet("sentiment", sentiment), SlotSet("sentiment_score", score), SlotSet("mood", mood)]
+        return [
+            SlotSet("sentiment", sentiment),
+            SlotSet("sentiment_score", score),
+            SlotSet("mood", mood)
+        ]
