@@ -4,7 +4,11 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --no-cache-dir -r actions/requirements.txt
+# Install dependencies to user-local directory
+RUN pip install --no-cache-dir --target=/app/.venv_lib -r actions/requirements.txt
+
+# Set PYTHONPATH so Rasa sees the custom packages
+ENV PYTHONPATH="/app/.venv_lib:$PYTHONPATH"
 
 EXPOSE 5005
 EXPOSE 5055
