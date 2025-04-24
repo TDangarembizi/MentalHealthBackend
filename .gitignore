@@ -11,8 +11,11 @@ __pycache__/
 env/
 venv/
 
+.idea
+
 # Rasa models
 rasa/*.db
+rasa/.rasa/cache
 
 # Ollama cache (if downloading locally)
 .ollama/
