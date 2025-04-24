@@ -1,3 +1,4 @@
+--constraint constraints.txt
 rasa==3.6.10
 rasa-sdk==3.6.2
 textblob==0.19.0
