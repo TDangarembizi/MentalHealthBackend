@@ -12,7 +12,6 @@ language: en
 
 pipeline:
   - name: WhitespaceTokenizer
-  - name: sentiment_analyzer.SentimentAnalyzer  # custom sentiment component
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
