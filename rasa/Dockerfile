@@ -4,8 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --no-cache-dir --upgrade pip setuptools \
- && pip install --no-cache-dir --force-reinstall --ignore-installed -r actions/requirements.txt
+RUN pip install --no-cache-dir --user -r actions/requirements.txt
 
 EXPOSE 5005
 EXPOSE 5055
