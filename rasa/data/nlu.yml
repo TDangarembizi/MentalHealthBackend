@@ -3195,6 +3195,9 @@ nlu:
     - I’m not sure
     - Definitely
     - I don’t want that
-    -No
-    -Yes
+    - No
+    - Yes
 - intent: nlu_fallback
+  examples: |
+    - blah blah
+    - abc
