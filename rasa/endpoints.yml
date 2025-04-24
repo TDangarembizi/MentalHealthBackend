@@ -1,2 +1,2 @@
 action_endpoint:
-  url: "http://localhost:5055/webhook"
+  url: "https://mental-health-backend-production-2005.up.railway.app/webhook"
