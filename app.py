@@ -58,7 +58,7 @@ if not firebase_admin._apps:
         print("[WARN] Could not set admin claims:", str(e))
 
 # Rasa server URL
-RASA_URL = "http://localhost:5005/webhooks/rest/webhook"
+RASA_URL = "https://mental-health-backend-production-3508.up.railway.app/webhooks/rest/webhook"
 
 @app.route("/")
 def index():
